@@ -11,3 +11,9 @@ count4: 0
 favorite:
   drink: cola
   food: hamberger
+
+pizzaToppings:
+  - mushrooms
+  - cheese
+  - peppers
+  - onions

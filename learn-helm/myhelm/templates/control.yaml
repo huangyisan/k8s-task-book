@@ -16,7 +16,18 @@ data:
   {{- with .Values.favorite }}
     drink: {{ .drink | upper }}
     food: {{ .food | upper }}
-  # 使用$调用根域
+  # 使用$调用根域, 不加$因为作用域不一样，会报错
     name: {{ $.Release.Name }}
   {{- end }}
 
+  # range
+  toppings:
+    {{- range .Values.pizzaToppings }}
+    - {{ . | title | quote }}
+    {{- end }}
+
+  # tuple
+  sizes:
+  {{- range tuple "small" "meduim" "large" }}
+    - {{ . }}
+  {{- end }}
