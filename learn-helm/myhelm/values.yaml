@@ -17,3 +17,11 @@ pizzaToppings:
   - cheese
   - peppers
   - onions
+
+# 父charts 定义子charts的内容，这样就达到了内容覆盖
+mysubchart:
+  dessert: ice cream
+
+# global 为全局Chart值
+global:
+  salad: caesar
