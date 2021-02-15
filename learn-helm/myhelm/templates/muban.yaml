@@ -1,0 +1,24 @@
+# 定义模板
+#{{- define "mychart.labels" }}
+#  labels:
+#    generator: helm
+#    date: {{ now | htmlDate }}
+#{{- end }}
+apiVersion: v1
+kind: muban
+metadata:
+  name: {{ .Release.Name }}-configmap
+# 使用template引入模板
+  {{- template "mychart.labels" }}
+# 在template后面传入内容
+  {{- template "mychart.labels.values" . }}
+data:
+  myvalue: "Hello World"
+  {{- range $key, $val := .Values.favorite }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+
+# 使用include插入模板
+# template只是将数据传入，无法对模板进行函数调整
+# include比template更好用
+{{ include "mychart.app" . | indent 2 }}
