@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  myvalue: "hello world"
+  drink: {{ .Values.favoriteDrink.drink | repeat 5 }}
+  food: {{ .Values.favoriteDrink.food | default "ddd" }}
+
+  notexist: {{ .Values.favoriteDrink.notexist | default "none" | upper | quote }}
+  bool: {{ ne .Values.count0 .Values.count1}}
+  le: {{ le .Values.count0 .Values.count1}}
+
+  empty: {{ .Values.count0 | empty }}
+  coalesce: {{ coalesce 0 1 2 3 }}
+  ternary: {{ ternary "foo" "bar" false }}
+  print: {{ print "my favourite food is " .Values.favoriteDrink.food }}
+  trim: {{ trim "        hello  "}}
+  trimAll: {{ trimAll "$" "sdf$sd" }}
+  trimPrefix: {{ trimPrefix "-" "-hello" }}
+  trimSuffix: {{ trimSuffix "-" "hello-" }}
+  lower: {{ "ME" | lower }}
+  title: {{ "title hello world first alpha to upper" | title }}
+  untitle: {{ "Title Hello World" | untitle }}
+  substr: {{ "Substring is what?" | substr 3 -1 }}
+  nospace: {{ "title hello world first alpha to upper" | nospace }}
+  trunc: {{ "title hello world first alpha to upper" | trunc 4 }}
+  trunc: {{ "title hello world first alpha to upper" | trunc -5 }}
+  abbrev: {{ "title hello world first alpha to upper" | abbrev 5 }}
+  contains: {{ "hello world" | contains "hello"}}
+  hasPrefix: {{ hasPrefix "cat" "catch" }}
+  squote: {{ "abc" | squote }}
+  indent: {{ "indent 4" | indent 4}}
+  replace: {{ "I am herry" | replace "I" "i"}}
+  shuffle: {{ "hello" | shuffle }}
+
+  atoi: {{ "123"|atoi }}
+  float64: {{ 123 | float64 }}
+  toString: {{ 123 | toString | quote}}
+  toStrings: {{ list 1 2 3 | toStrings }}
+
+  regexMatch: {{ "test@acme.com" | regexMatch "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$" }}
+  
+  sha1sum: {{ sha1sum "Hello world!" }}
+  sha256sum: {{ sha256sum "Hello world!" }}
+  htpasswd: {{ htpasswd "username" "password" }}
+   
+  now: {{ now }}
+  date: {{ now | date "2006-01-02" }}
+  duration: {{ duration "950" }}
+  durationRound: {{ durationRound "2h10m5s" }}
+
+  unixEpoch: {{ now | unixEpoch }}
+  
+  {{ $myDict := dict "name1" "value1" "name2" "value2" "name3" "value 3" }}
+  myDict: {{ $myDict }}
+  get: {{ get $myDict "name1" }}
+  hasKey: {{ hasKey $myDict "name1" }}
+  keys: {{ keys $myDict | sortAlpha }}
+
+  {{ $myList := list 1 1 2 3 4 5 }}
+  list: {{ $myList }}
+  first: {{ first $myList }}
+  last: {{ last $myList }}
+  prepend: {{ prepend $myList 0 }}
+  without: {{ without $myList 1 }}
+  has: {{ has 4 $myList }}
+  slice: {{ slice $myList 0 3 }}
+  until: {{ until 5 }}
+
+  add: {{ add 1 2 3 4 }}
+  add1: {{ add1 10 }}
+  sub: {{ sub 6 1 }}
+  div: {{ div 6 4 }}
+  mod: {{ mod 6 4 }}
+  div: {{ div 6 4 }}
+  mod: {{ mod 6 4 }}
+  mul: {{ mul 5 6 7 }}
+
+  max: {{ max 3 4 5 }}
+  min: {{ min -9 0 2 }}
+
+  floor: {{ floor 123.0099 }}
+  ceil: {{ ceil 123.4 }}
+  round: {{ round 1.25 1 }}
+
+  len: {{ len $myList }}
+
+  getHostByName: {{ getHostByName "www.google.com" }}

@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  myvalue: "Hello World"
+  drink: {{ .Values.favoriteDrink.drink | default "tea" | quote }}
+  food: {{ .Values.favoriteDrink.food | upper | quote }}
+  # - 表示删除左边的空格，也就会删除对应的空行
+  {{- if eq .Values.favoriteDrink.drink "coffee" }}
+  mug: true
+  {{- end }}
+
+  # with
+  with:
+  {{- with .Values.favorite }}
+    drink: {{ .drink | upper }}
+    food: {{ .food | upper }}
+  # 使用$调用根域
+    name: {{ $.Release.Name }}
+  {{- end }}
+
